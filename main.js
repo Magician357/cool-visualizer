@@ -81,12 +81,22 @@ for (var i = 0; i < 6; i++) {
     Img2[i].src = "images/water/"+i+".gif";
 }
 
+var eyes = [];
+for (var i = 1; i <= 15; i++) {
+    eyes[i-1] = new Image();
+    eyes[i-1].src = "images/eyes/eyes-"+i.toString().padStart(2,"0")+".png";
+}
+canvas.eye_canvas = document.createElement("canvas");
+canvas.eye_canvas.width = 480;
+canvas.eye_canvas.height = 480;
+const eye_ctx = canvas.eye_canvas.getContext("2d");
+
 const font = "24px Helvetica";
 const letter_height = 30;//40;
 
 const text_input = document.getElementById("text_input");
 
-var display_text = "▢▣▤▥▦▧▨▩◧◨◩◪◫◰◱◲▢▣▤▥▦▧▨▩SORAMIMICAKE";
+var display_text = "▢▣▤AHH▥▦▧▨▩SO◧◨◩◪◫◰◱◲▢▣DISTORTED▤▥▦▧▨▩◧◨";
 
 text_input.value = display_text;
 document.getElementById("text_button").addEventListener("click",(ev)=>{
@@ -134,7 +144,29 @@ function main_loop(now=0){
     ctx.rect(0,110,80,240)
     ctx.fill();
 
+    eye_ctx.globalAlpha=0.05;
+    eye_ctx.drawImage(eyes[Math.floor(n/10)%eyes.length],80,110,400,240);
+    // ctx.drawImage(canvas.eye_canvas,132,75);
+    ctx.drawImage(canvas.eye_canvas,0,0,480,270,132,75,480,270)
+
+    ctx.globalCompositeOperation = "difference";
+    ctx.fillStyle = "white";
+    ctx.font = "150px Helvetica";
+    ctx.fillText((audio_element.currentTime%60).toFixed(2).padStart(5,"0"),80,470)
+    ctx.fillText((audio_element.currentTime/60).toFixed(2).padStart(5,"0"),80,105)
+
+    ctx.font = "200px Helvetica Compressed"
+    ctx.fillText("IM THE",-4,252)
+    ctx.font = "200px Helvetica Compressed"
+    ctx.fillText("ONE",-4,110+240)
+
     ctx.globalCompositeOperation = "source-over";
+
+    ctx.fillStyle="white";
+    ctx.beginPath();
+    ctx.rect(25,110,25,240);
+    ctx.fill();
+
     ctx.font = font;
     ctx.fillStyle = "black";
     for (let i = 0; i < display_text.length; i++) {
@@ -147,12 +179,6 @@ function main_loop(now=0){
 
         ctx.fillText(char, x, y);
     }
-
-    ctx.globalCompositeOperation = "difference";
-    ctx.fillStyle = "white";
-    ctx.font = "150px Helvetica";
-    ctx.fillText((audio_element.currentTime%60).toFixed(2).padStart(5,"0"),80,470)
-    ctx.fillText((audio_element.currentTime/60).toFixed(2).padStart(5,"0"),80,105)
 
     draw_audio_line();
     // n+=1;
