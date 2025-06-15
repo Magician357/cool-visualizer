@@ -5,11 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cool visualizer</title>
     <script src="main.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="fonts/style.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <canvas width="480" height="480" id="main"></canvas>
-    <audio id="audio" controls src="audio/homemade sample.wav"></audio>
+    <audio id="audio" controls src="audio/Azumanga Daioh OP - Soramimi Cake [1080p - Lyrics].mp3"></audio>
+    <div>
+        <input type="text" id="text_input">
+        <button id="text_button">change text</button>
+    </div>
+    <div>
+        <button onclick="reset_time=true;">reset time</button>
+        <button onclick="reset_time=true;audio_element.currentTime=0;audio_element.play();">reset time and play</button>
+    </div>
+
+    <div>
+        <input type="file" id="audio_file" accept="audio/*" />
+    </div>
 
 </body>
 </html>
